@@ -1,0 +1,79 @@
+\documentclass[10pt]{book}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,activeacute,english]{babel}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,amscd,enumerate, mathtools}
+\usepackage{makeidx}
+\usepackage[full]{harvard}
+\makeindex
+\decimalpoint
+%----------------------Márgenes y tamaño del libro--------------------------------
+\usepackage[right=3cm,left=3cm,top=3cm,bottom=3cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength\parskip{1.5mm}
+%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\sffamily\thepage}
+\fancyhead[LO]{\sffamily\rightmark}
+\fancyhead[RE]{\sffamily\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+%
+%--------------------------------------------------------------------------------
+
+\begin{document}
+\selectlanguage{spanish}
+\bibliographystyle{agsm}
+
+% --------------------------------------------------------------------------------
+\numberwithin{equation}{section}
+\def\bPi{\mbox{\boldmath$\Pi$}}
+\def\bgamma{\mbox{\boldmath$\gamma$}}
+\def\beps{\mbox{\boldmath$\varepsilon$}}
+\def\bbeta{\mbox{\boldmath$\beta$}}
+\def\blambda{\mbox{\boldmath$\lambda$}}
+\def\bBeta{\mbox{\boldmath$\Beta$}}
+\def\btheta{\mbox{\boldmath$\theta$}}
+\def\bmu{\mbox{\boldmath$\mu$}}
+\def\bSigma{\mbox{\boldmath$\Sigma$}}
+\def\bphi{\mbox{\boldmath$\phi$}}
+\def\bpi{\mbox{\boldmath$\pi$}}
+\def\bxi{\mbox{\boldmath$\xi$}}
+
+\theoremstyle{definition}
+\newtheorem{Eje}{Ejemplo}
+\numberwithin{Eje}{section}
+
+\newtheoremstyle{mydef}{}{}{\slshape}{}{\bfseries}{.}{ }{}
+\theoremstyle{mydef}
+\newtheorem{Res}{Resultado}
+\numberwithin{Res}{section}
+\newtheorem{Defi}{Definición}
+\numberwithin{Defi}{section}
+% --------------------------------------------------------------------------------
+\pagestyle{empty}
+\Sexpr{knit_child('portada.Rnw')}
+\frontmatter
+\tableofcontents
+% --------------------------------------------------------------------------------
+\mainmatter
+\Sexpr{knit_child('portada.Rnw')}
+\Sexpr{knit_child('cap1.Rnw')}
+\Sexpr{knit_child('cap2.Rnw')}
+\Sexpr{knit_child('cap3.Rnw')}
+\Sexpr{knit_child('cap4.Rnw')}
+\Sexpr{knit_child('cap5.Rnw')}
+%\Sexpr{knit_child('test.Rnw')}
+% --------------------------------------------------------------------------------
+\bibliography{LibroBib}
+% --------------------------------------------------------------------------------
+% --------------------------------------------------------------------------------
+\listoffigures
+\listoftables
+\printindex
+% --------------------------------------------------------------------------------
+% --------------------------------------------------------------------------------
+\end{document}
