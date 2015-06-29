@@ -1,0 +1,1049 @@
+\documentclass[12pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath,amssymb,amsthm,amscd,enumerate}
+%\usepackage[dviwindo]{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[full]{harvard}
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{lipsum}
+\newcounter{examplecounter}
+\newenvironment{example}{\begin{quote}%
+    \refstepcounter{examplecounter}%
+  \textbf{Example \arabic{examplecounter}}%
+  \quad
+}{%
+\end{quote}%
+}
+
+\begin{document}
+
+\bibliographystyle{agsm}
+
+\def\btheta{\mbox{\boldmath$\theta$}}
+\def\balpha{\mbox{\boldmath$\alpha$}}
+\def\bTheta{\mbox{\boldmath$\Theta$}}
+\newtheorem{Res}{Result}
+\newtheorem{Eje}{Ejemplo}
+\newtheorem{Proof}{Proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+
+\textbf{Universidad Santo Tomás}\\
+División de Ciencias Económicas y Administrativas \\
+Departamento de Estadística\\
+\vspace{2cm}
+
+{\Large \textbf{Simulación y cálculo numérico}}
+
+\vspace{2cm}
+
+
+By: \textbf{Hanwen Zhang}
+
+\emph{hanwenzhang@usantotomas.edu.co}
+
+
+\end{center}
+
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Clase 1}
+
+Presentación del curso. Entrega de programas. Conformar grupos (si hay muchos estudiantes). Conocer el nivel de los estudiantes en la programación de R.
+
+\section{Clase 2}
+
+Programación básica en R.
+
+\begin{itemize}
+\item Creación de objetos
+<<>>=
+x<-y<-5
+x=y=5
+a<-c(3,5,10)
+b<-c(2:20)
+@
+\item Operaciones básicas
+<<>>=
+3+5
+2-10
+2*3
+2/5
+3^-1
+@
+\item Operaciones lógicas: \verb'>, >=, <, <=, ==, !=, &, |'. Ejemplo:
+<<>>=
+3>5
+3<4
+2==2.01
+3==3&2<2
+3==3|2<2
+@
+\item Funciones matemáticas básicas
+Función logarítmica: \verb'log()', \verb'log10()', \verb'log2()'. Ejemplos:
+<<>>=	
+log(2)
+log(2, base=10)
+log(2,10)
+log10(2)
+log(5,base=2)
+log2(5)
+@
+Función exponencial: \verb'exp()'. 
+<<>>=
+exp(1)
+exp(-2)
+@
+Raíz cuadrada: \verb'sqrt()'\\
+Valor absoluto: \verb'abs()'
+\item Funciones estadísticas básicas\\
+Para un conjunto de datos:\\
+Media: \verb'mean()', mediana: \verb'median()', varianza: \verb'var()', desviación estándar: \verb'sd()', percentiles: \verb'quantile()', algunas medidas descriptivas: \verb'summary()'\\
+Para dos conjunto de datos de la misma longitud:\\
+Covarianza: \verb'cov(,)', correlación: \verb'cor(,)'	
+\item Otraa funciones muy útiles: \verb'rep()', \verb'seq()' para crear repeticiones y secuencias. \verb'orden()' y \verb'sort()' para cuestiones del órden
+<<>>=
+rep(3,5)
+rep("A",5)
+rep(NA,10)
+c(rep("A",4),rep("B",6))
+a<-c(1:3)
+rep(a,4)
+seq(1,10,by=1)
+seq(0,1,by=0.1)
+seq(0,1,by=0.11)
+seq(0, 1, length.out = 13)
+d<-c(3,-1,0,4)
+sort(d)
+order(d)
+@
+\item Extraer componentes de un vector
+Se utiliza los corchetes cuadradas \verb'[ ]', por ejemplo
+<<>>=
+a<-c(-3:11)
+a
+a[4]
+a[-2]
+a[c(1,6,7)]
+a[a>0]
+@
+\end{itemize}
+
+Paquetes en R
+\begin{itemize}
+\item Descarga de un paquete: \verb'install.packages("name")'
+\item Uso de un paquete: \verb'library(name)'
+\item Ayuda sobre un paquete
+\end{itemize}
+
+Ver los atributos de un objeto en R: \verb'names(), $'
+<<>>=
+library(rpart)
+USArrests # a veces es necesario usar data(USArrests)
+names(USArrests)
+USArrests$Murder
+USArrests$Mur
+@
+
+Ayuda en R
+\begin{itemize}
+\item Usar \verb'?' para comandos existentes en R
+\item Usar \verb'??' para averiguar sobre algún tema o si no está seguro de la forma de escribir el comando
+<<>>=
+?array
+??kalman
+help(array)
+help(kalman)
+@
+\end{itemize}
+
+
+Ejercicio
+\begin{enumerate}
+\item Calcular los valores de las siguientes expresiones
+\begin{itemize}
+\item 
+\begin{equation*}\frac{1}{\sqrt{10\pi}}\exp\left\{-\frac{(4-3)^2}{5}\right\}\end{equation*}
+\item $x=-2$, $y=\sqrt{|x|+1}$,
+\begin{equation*}
+z=\max\{\cos y, \log(x^2-1)\}+[y]
+\end{equation*}
+\end{itemize}
+\item Descargar el paquete \verb'TeachingSamplings' y para la base de datos \verb'Lucy' y calcular
+\begin{itemize}
+\item Las medidas descriptivas como la media, mediana, desviación estándar, cuartiles de la variable Impuesto.
+\item Las medidas descriptivas como la media, mediana, desviación estándar, cuartiles de la variable Taxes segregado según si envía correo SPAM o no.
+\item Las medidas descriptivas como la media, mediana, desviación estándar, cuartiles de la variable Income segregado según si la variable Taxes toma valores mayores o menores de 3.5.
+\end{itemize}
+\end{enumerate}
+
+\section{Clase 3, Matrices}
+
+\subsection{Creación de un vector, matriz, arreglo}
+Para crea una matriz utilizamos la función \verb'matrix'.
+
+Por ejemplo
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),nrow=2,ncol=3)
+@
+crea una matriz de 2 filas y 3 columnas, las entradas se rellenan por columna.
+
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,3,byrow=T)
+@
+crea una matriz de 2 filas y 3 columnas, las entradas se rellenan por fila.
+
+Si el número de entradas de la matriz es mayor al número de valores provistos, R rellena toda la matriz repitiendo los valores provistos. Por ejemplo, vea la salida de 
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,5)
+@
+
+Si el número de entradas de la matriz es menor al número de valores provistos, R solo toma los primeros valores necesarios para llenar la matriz. Por ejemplo, vea la salida de 
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,2)
+@
+
+Si no especifica ni el número de filas ni el número de columnas en el comando \verb'matrix', R crea automáticamente un vector columna. Vea la salida de 
+
+<<>>=
+A<-matrix(c(1,2,5,2,4,5))
+@
+
+R toma los vectores creados con \verb'c()' como vectores filas. 
+
+Un arreglo es como la generalización de una matriz que permite más de dos dimensiones (fila y columna), la creación de un arreglo se lleva a cabo usando\verb'array' especificando los detalles de la dimensión. Vea la salida de
+
+<<>>=
+B<-array(c(1:12),c(2,3,2))
+@
+
+Ojo: a diferencia de \verb'matrix', en \verb'array' se debe especificar los órdenes dentro de \verb'c()'.
+
+Algunas veces, necesitamos crear matrices a partir de matrices ya existentes, es decir, necesitamos unir matrices. Podemos unir matrices por filas o por columnas. 
+
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,3)
+B<-matrix(c(10,20),2,1)
+C<-matrix(c(100,200),1,3)
+cbind(A,B)
+rbind(A,C)
+@
+
+Para crear una matriz diagonal, utilizamos \verb'diag()', por ejemplo \verb'diag(c(2,3,0))' crea una matriz de tamaño $3\times 3$ donde los elementos en la diagonal son 2, 3, y 0. (Si aplicamos \verb'diag()' a una matriz, qué calcula?)
+
+\subsection{Operaciones básicas}
+La suma y resta entre matrices sólo se puede efectuar si las matrices son del mismo tamaño (para ver el tamaño de una matriz, usa \verb'dim()').
+
+Una matriz puede sumar, restar, multiplicar, dividir, elevar potencia con un número escalar, y la operación se efectúa para todos las entradas de la matriz. Vea la salida de
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,3)
+A
+A+1
+A-3
+A*0.5
+A/4
+A^3
+@
+
+La multiplicación entre dos matrices $A$ y $B$ es válida si el número de columnas de $A$ es igual al número de filas de $B$, en este caso la operación se lleva a cabo usando \verb'%*%', vea la salida de
+
+<<>>=
+A<-matrix(c(1,2,5,2,4,5),2,3)
+B<-matrix(c(0,1,2))
+A%*%B
+C<-matrix(c(0,1,2),1,3)
+A%*%C
+@
+
+Cuando utilizamos \verb'*' para la multiplicación de matrices, éstas deben tener la misma dimensión y el producto es de componente a componente. Vea la salida de 
+
+<<>>=
+A<-matrix(c(1,2,5,5),2,2)
+B<-matrix(c(0,1,2,1),2,2)
+C<-matrix(c(0,1,2),1,3)
+A*B
+A*C
+@
+
+Cuando aplicamos las funciones de \verb'sum()' y \verb'mean()' a una matriz, obtenemos la suma y la media de todos los valores que contiene la matriz. Otras funciones útiles son \verb'colSums()' y \verb'rowSums()' que arrojan las sumas por columnas y por filas, respectivamente. Vea la salida de
+
+<<>>=
+A<-matrix(c(1,2,5,5),2,2)
+sum(A)
+mean(A)
+colSums(A)
+rowSums(A)
+@
+
+\subsection{Otras operaciones}
+\begin{itemize}
+\item Calcular la inversa de una matriz es muy importante, y lo hacemos usando \verb'solve()' (tenga en cuenta que solo algunas matrices cuadradas tienen inversa).
+<<>>=
+solve(A)
+solve(C)
+@
+\item El determinante de una matriz se calcula con \verb'det()'
+\item La transpuesta de una matriz se calcula con \verb't()'
+\item Los valores y vectores propios se calcula con \verb'eigen()'
+\item El producto kronecker entre dos matrices se lleva a cabo con \verb'kronecker(,)'
+<<>>=
+A
+B
+kronecker(A,B)
+@
+\item La descomposición en valores singulares se lleva a cabo con \verb'svd()'
+\item Para extraer submatrices, utilizamos \verb'[ ]', teniendo en cuenta las posiciones de las filas y columnas
+<<>>=
+kronecker(A,B)[1,2]
+kronecker(A,B)[1:3,2]
+kronecker(A,B)[c(1,4),2]
+kronecker(A,B)[c(1,4),c(2,4)]
+kronecker(A,B)[c(1,4),]
+@
+\begin{verbatim}
+\end{verbatim}
+\end{itemize}
+
+\subsection{Ejercicios}
+\begin{enumerate}
+\item Crea la matriz de identidad de tamaño 20.
+\item Para la matriz \begin{equation*}
+A=\begin{pmatrix}
+1&0&2&-1\\
+2&-1&3&0\\
+3&-1&5&-1\\
+1&5&2&1
+\end{pmatrix}
+\end{equation*}
+\begin{itemize}
+\item Diga si $A$ es invertible
+\item Encuentra la forma de calcular el rango de $A$
+  \item Verifique en R que la propiedad que afirma que i) el determinante de una matriz es el producto de sus valores propios, ii) la traza de una matriz es la suma de sus valores propios.
+\item Encuentre los valores y vectores propios de $A$.
+\item A partir de A, construya la siguiente matriz diagonal por bloques
+\begin{equation*}
+\begin{pmatrix}
+1&0&0&0\\
+2&-1&0&0\\
+0&0&5&-1\\
+0&0&2&1
+\end{pmatrix}
+\end{equation*}
+\end{itemize}
+
+\item Para los datos de Lucy del paquete TeachingSampling, 
+\begin{itemize}
+\item crea una matriz de datos que contienen las variables de \verb'Income', \verb'Employees' y \verb'Taxes' donde cada fila de la matriz contiene los valores de estas tres variables para una empresa. 
+\item Crea un vector que contiene los promedios de las tres variables, $\bar{x}$
+  \item Calcula la matriz de varianzas y covarianzas muestrales de las tres variables $S$
+  \item Sea $\mu=(450,65,14)'$, calcular 
+\begin{equation*}
+(\bar{x}-\mu)'S^{-1}(\bar{x}-\mu)
+\end{equation*} 
+\end{itemize}
+\item Encuentre una solución para cada uno de los sistemas de ecuaciones lineales dados a continuación
+\begin{enumerate}[(a)]
+\item 
+\begin{align*}
+3x_1-2x_2-x_3&=1\\
+-x_1+2x_2+2x_3&=2\\
+x_1+2x_2+3x_3&=4
+\end{align*}
+\item 
+\begin{align*}
+x_1-2x_2+x_3+x_4&=2\\
+3x_1+2x_2-2x_4&=-8\\
+4x_2-x_3-x_4&=1\\
+5x_1+3x_3-x_4&=-3
+\end{align*}
+\end{enumerate}
+
+\item Para las siguientes matrices, 
+\begin{enumerate}[(a)]
+\item 
+\begin{equation*}
+\begin{pmatrix}
+-1&1&0\\
+2&-3&1\\
+1&-2&1
+\end{pmatrix}
+\end{equation*}
+\item \begin{equation*}
+\begin{pmatrix}
+2&1&-2
+\end{pmatrix}
+\end{equation*}
+\item
+\begin{equation*}
+\begin{pmatrix}
+5&-2\\
+3&-1\\
+0&1
+\end{pmatrix}
+\end{equation*}
+\item
+\begin{equation*}
+\begin{pmatrix}
+1\\
+0\\
+3
+\end{pmatrix}
+\end{equation*}
+\end{enumerate}
+calcule la inversa generalizada de las siguientes matrices y verifique que cumpla las 4 condiciones
+\begin{itemize}
+\item $AA^-A=A$
+\item $A^-AA^-=A^-$
+\item $AA^-$ es simétrica
+\item $A^-A$ es simétrica
+\end{itemize}
+donde $A^-$ denota la inversa generalizada de la matriz $A$.
+
+\item Para ajustar una línea de regresión $y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}$ entre una variable de interés $Y$ y $k$ variables explicativas $X_1,\cdots,X_k$, los estimadores de mínimos cuadrados de los coeficientes $\beta=(\beta_0,\beta_1,\cdots,\beta_k$ están dados por $(X'X)^{-1}X'Y$ donde $Y$ es el vector que contiene las $n$ observaciones de la variable $Y$ y $X$ está dado por
+\begin{equation*}
+X=\begin{pmatrix}
+1&X_{11}&\cdots&X_{1k}\\
+1&X_{21}&\cdots&X_{2k}\\
+\vdots&\vdots&\cdots&\vdots\\
+1&X_{n1}&\cdots&X_{nk}\\
+\end{pmatrix}
+\end{equation*}
+Para la base de datos \verb'Lucy', utilice la variable \verb'Taxes' como la variable de interés y las demás variables CUANTITATIVAS como variables explicativas y obtenga la ecuación de la línea de regresión múltiple.
+\item 
+\begin{itemize}
+\item Crea un arreglo de números de tamaño $2\times3\times4$ donde la matriz en las entradas $[1,,]$ sea $\begin{pmatrix}2&0&-2&0\\1&2&-1&-10\\0&0&2&1\end{pmatrix}$ y la entrada $[2,,]$ sea $\begin{pmatrix}-0.1&0.5&-2&10\\10&0&-5&10\\1&-1&20&1\end{pmatrix}$
+\item Para el anterior arreglo, reemplace todas entradas negativas por -100.
+\end{itemize}
+
+\end{enumerate}
+
+\section{Clase 5. Ciclos}
+Los ciclos son herramientas fundamentales para realizar programaciones estadísticas. Los principales comandos son:
+
+\subsection{for}
+El comando \verb'for' puede ser utilizado para repetir un número grande de iteraciones, como por ejemplo, llenar un vector o una matriz, o también sirve para crear una secuencia de valores de forma recursiva.
+
+El uso del comando es
+\begin{verbatim}
+for(contador){
+accion
+}
+\end{verbatim}
+
+\begin{example}
+Crear una sucesión de 100 números comenzando en 1 y el incremento entre dos números consecutivos sea 3. Es decir, 1, 4, 7, 10,...
+<<>>=
+x<-rep(NA,100)
+x[1]<-1
+for(i in 2:100){
+x[i]<-x[i-1]+3
+}
+x
+@
+\end{example}
+Los mismos resultados se pueden obtener con lo siguiente
+<<>>=
+x<-cumsum(c(1,rep(3,99)))
+@
+¿Por qué?
+
+Un \verb'for' puede estar dentro de otro \verb'for'
+\begin{example}
+Crear una matriz de tamaño $10\times 10$ donde el elemento $i,j$ de la matriz sea $|i-j|$
+<<>>=
+A<-matrix(NA,10,10)
+for(i in 1:10){
+  for(j in 1:10){
+    A[i,j]<-abs(i-j)
+  }
+}
+A
+@
+\end{example}
+
+Recomendación: 
+\begin{itemize}
+\item Poner las instrucciones que no involucre al contador del \verb'for' o no dependa de las iteraciones anteriores fuera del \verb'for'. Por ejemplo, no se recomienda escribir:
+<<>>=
+# Simular 20 valores de las distribuciones N(1,1), N(2,1), ..., N(20,1)
+x<-c()
+for(i in 1:20){
+sigma<-1
+x[i]<-rnorm(1,i,sigma)
+}
+@
+Es mejor usar:
+<<>>=
+# Simular 20 valores de las distribuciones N(1,1), N(2,1), ..., N(20,1)
+x<-c()
+sigma<-1
+for(i in 1:20){
+x[i]<-rnorm(1,i,sigma)
+}
+@
+\item No usar el nombre del contador para otros objetos. 
+\end{itemize}
+
+\subsection{Ejercicios}
+\begin{enumerate}
+\item Crear una sucesión de 500 números comenzando en 0 y $a_n=a_{n-1}-4$.
+\item Crear una sucesión de 100 números comenzando en 1 y $a_n=2a_{n-1}$.
+\item Crea la siguiente sucesión (de longitud 150) de números cuadrados: 1, 4, 9, 16, 25, 36, 49, 64, ... (hágalo de dos formas, con for y sin for)
+\item Crea la siguiente sucesión (de longitud 150) de números (números triangulares): 1, 3, 6, 10, 15, 21, 28, 36, 45, ...
+\item Crea una secuencia de 50 números donde $a_1=5$, $a_n=a_1+2(n-1)$.
+\item Crea 120 números de Fibonacci.
+\item Crea 100 números de la sucesión de Padovan ($a_1=a_2=a_3=1$, $a_{n}=a_{n-2}+a_{n-3}$).
+\item Crea 100 números de Perrin ($a_1=3$, $a_2=0$, $a_3=2$, $a_{n}=a_{n-2}+a_{n-3}$).
+\item Para las variables cuantitativas de los datos de \verb'Lucy', usando \verb'for' crea una matriz de dos filas y tantas columnas como el número de variables, donde las dos entradas de cada columna corresponda a la media y la desviación estándar de la variable.
+\item Para una secuencia de datos $y_t$ con $t=1,\cdots,T$, la autocorrelación de rezago $k$ se define como 
+\begin{equation*}
+\rho_k=\dfrac{\sum_{t=1}^{T-k}(y_t-\bar{y})(y_{t+k}-\bar{y})}{\sum_{t=1}^T(y_t-\bar{y})^2}
+\end{equation*}
+Para los datos \verb'AirPassengers' en \verb'R' (no se necesita ningún paquete específico), calcular $\rho_0,\cdots,\rho_{10}$, y calcular el determinante de la siguiente matriz
+\begin{equation*}
+\begin{pmatrix}
+1&\rho_1&\rho_2&\cdots&\rho_9&\rho_{10}\\
+\rho_1&1&\rho_1&\cdots&\rho_8&\rho_{9}\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+\rho_{10}&\rho_9&\rho_8&\cdots&\rho_1&1\\
+\end{pmatrix}
+\end{equation*}
+\end{enumerate}
+
+\section{Clase 6. Ciclos II}
+\subsection{if}
+El comando \verb'if' permite ejecutar determinadas acciones según si cumplen o no condiciones lógicas. El uso del comando es
+\begin{verbatim}
+if(condicion1){
+  accion1
+}
+if(condicion2){
+  accion2
+}
+\end{verbatim}
+
+\begin{example}
+Dado $x=(-1,0,-2,1,5)$, reemplazar los valores negativos de $x$ por el valor absoluto.
+<<>>=
+x<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){x[i]<-abs(x[i])}
+}
+x
+@
+\end{example}
+
+\begin{example}
+Dado $x=(-1,0,-2,1,5)$, reemplazar los valores negativos de $x$ por el valor absoluto y reemplazar los valores positivos por su cuadrado.
+<<>>=
+x<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){x[i]<-abs(x[i])}
+  if(x[i]>0){x[i]<-x[i]^2}
+}
+x
+@
+Lo anterior NO es correcto. Lo correcto puede ser
+<<>>=
+x<-y<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){y[i]<-abs(x[i])}
+  if(x[i]>0){y[i]<-x[i]^2}
+}
+y
+@
+\end{example}
+
+\begin{example}
+Dado $x=(-1,0,-2,1,5)$, reemplazar los valores negativos de $x$ por el valor absoluto y reemplazar los otros valores por -10.
+<<>>=
+x<-y<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){y[i]<-abs(x[i])}
+  else{y[i]<-100}
+}
+y
+@
+lo cual es equivalente a 
+<<>>=
+x<-y<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){y[i]<-abs(x[i])}
+  if(x[i]>=0){y[i]<-100}
+}
+y
+@
+\end{example}
+
+Otro ejemplo.
+\begin{example}
+Dado $x=(-1,0,-2,1,5)$, reemplazar los valores negativos de $x$ por el valor absoluto, reemplazar los valores positivos por su cuadrado y reemplazar los valores nulos por 100.
+<<>>=
+x<-y<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){y[i]<-abs(x[i])}
+  if(x[i]>0){y[i]<-x[i]^2}
+  else{y[i]<-100}
+}
+y
+@
+Lo anterior no sive, es decir, \verb'else' sólo puede ser usado con un único \verb'if'. Tendríamos que usar
+<<>>=
+x<-y<-c(-1,0,-2,1,5)
+for(i in 1:length(x)){
+  if(x[i]<0){y[i]<-abs(x[i])}
+  if(x[i]>0){y[i]<-x[i]^2}
+  if(x[i]==0){y[i]<-100}
+}
+y
+@
+\end{example}
+
+En \verb'R' discretizar una variabl cuantitativa es muy sencillo. Por ejemplo, suponga que $a=(1.4,2,2.5,0.6,0.8,1.6,5.2,10.1)$ corresponden a ingreso mensual (medida en millón de pesos) de 8 personas y suponga que queremos volver $a$ cualtitativa clasificando los individuos en grupos de ingreso alto y bajo según si su ingreso es mayor a 2 millones o no. En principio, tendríamos que usar los siguientes códigos
+<<>>=
+a<-categ<-c(1.4,2,2.5,0.6,0.8,1.6,5.2,10.1)
+for(i in 1:length(a)){
+  if(a[i]<2){categ[i]<-0}
+  if(a[i]>=2){categ[i]<-1}
+}
+categ
+@
+Sin embargo, los siguientes comandos son más simples
+<<>>=
+as.double(a>=2)
+@
+Si necesitamos reemplzar todos los ingresos mayores a 5 millones por 0, podemos usar
+<<>>=
+a[a>5]<-0
+a
+@
+Si necesitmamos eliminar de \verb'a' todos los valores menores a 2 millones,
+<<>>=
+a<-c(1.4,2,2.5,0.6,0.8,1.6,5.2,10.1)
+a<-a[which((a<2)==FALSE)]
+a
+@
+
+Otro comando útil para reemplazar valores según si cumple o no cierta condición es \verb'ifelse', el uso de la función es \begin{verbatim}
+ifelse(condicion, valor si cumple la condicion, valor si no la cumple)
+\end{verbatim}
+Por ejemplo, queremos que los valores de \verb'a' mayores a 2 sea reemplazado por Alto y los otros reemplazods por Medio, podemos usar
+<<>>=
+a<-c(1.4,2,2.5,0.6,0.8,1.6,5.2,10.1)
+ifelse(a>2,"Alto", "Medio")
+@
+También podemos exigir que los valores mayores a 2 en \verb'a' sean cambiados por 1000, y mantener sin cambiar los valores no mayores a 2
+<<>>=
+a<-c(1.4,2,2.5,0.6,0.8,1.6,5.2,10.1)
+ifelse(a>2,1000,a)
+@
+
+A veces, los datos pueden contener datos faltantes, que usualmente se denota con NA, queremos identificar cuáles entradas son NA, y tal vez eliminarlos
+<<>>=
+a<-c(1.4,2,NA,0.6,NA,1.6,5.2,10.1)
+is.finite(a)
+which(is.finite(a)==F)
+is.na(a)
+which(is.na(a)==T)
+a[is.finite(a)]
+@
+
+\subsection{while}
+\verb'while' se utiliza cuando queremos que se ejecute algo siempre y cuando se cumple alguna condición lógica. El uso de la función es
+\begin{verbatim}
+while(condicion){
+  accion
+}
+\end{verbatim}
+
+\begin{example}
+Queremos crear una sucesión de valores de forma $1/(x^2)$. como la sucesión converge a 0, entonces queremos crear todos valores desde 1 hasta 0.001 (prácticamente 0).
+<<>>=
+a<-1
+i<-1
+while(min(a)>0.001){
+  i<-i+1
+  a<-c(a,1/(i^2))
+}
+a
+@
+\end{example}
+
+\subsection{Ejercicios}
+\begin{enumerate}
+\item Calcular el valor de la función $f(x)$ para los valores dados de $x$ (en lo posible, escriba dos comandos para cada función, uno utilizando \verb'if', y otro utilizando \verb'ifelse')
+\begin{itemize}
+\item 
+\begin{equation*}
+f(x)=
+\begin{cases}
+2x+5&\text{si $x>-2$}\\
+1&\text{si no}
+\end{cases}
+\end{equation*}
+valores de $x$: -5, -3, -2, 0, 1, 2, 6.
+\item 
+\begin{equation*}
+f(x)=
+\begin{cases}
+x^2&\text{si $x$ es entero}\\
+[x]&\text{si no}
+\end{cases}
+\end{equation*}
+valores de $x$: 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4.
+\item
+\begin{equation*}
+f(x,y)=
+\begin{cases}
+x+y&\text{si $x>0$ y $y>0$}\\
+0&\text{si no}
+\end{cases}
+\end{equation*}
+valores de $(x,y)$: (-2,-1), (-2,0), (-2,1), (1,2), (1,-2), (3,2)
+\item
+\begin{equation*}
+f(x,y)=
+\begin{cases}
+x+y&\text{si $x>0$ y $y>0$}\\
+x-y&\text{si $x>0$ y $y<0$}\\
+0&\text{si no}
+\end{cases}
+\end{equation*}
+valores de $(x,y)$: (-2,-1), (-2,0), (-2,1), (1,2), (1,-2), (3,2)
+\item
+\begin{equation*}
+f(x,y)=
+\begin{cases}
+x+y&\text{si $x$ y $y$ tiene el mismo signo}\\
+x-y&\text{si no}
+\end{cases}
+\end{equation*}
+valores de $(x,y)$: (-2,-1), (-2,0), (-2,1), (1,2), (1,-2), (3,2)
+\end{itemize}
+\item Crear una sucesión de números de Fibonacci menores a 5000. 
+\end{enumerate}
+
+\section{Clase 7. Funciones}
+Una función en \verb'R' realiza operaciones sobre los argumentos que el usuario provee y arroja uno o más resultados. La sintáxis para escribir una función es 
+\begin{verbatim}
+function(argumentos){
+ computos
+}
+\end{verbatim}
+
+\begin{example}
+Queremos esribir una función que calcula lo siguiente: \begin{equation*}
+f(x)=3x-2
+\end{equation*}
+Podemos utilizar el siguiente código
+<<>>=
+MF1<-function(x){
+  3*x-2
+}
+MF1(3)
+MF1(c(0:3))
+@
+\end{example}
+
+Ahora, calculamos una función un poco más compleja:
+
+\begin{example}
+Queremos esribir una función que calcula lo siguiente: \begin{equation*}
+f(x)=
+\begin{cases}
+2x+5&\text{si $x>-2$}\\
+1&\text{si no}
+\end{cases}
+\end{equation*}
+Podemos utilizar el siguiente código
+<<>>=
+MF2<-function(x){
+  if(x>-2){2*x+5}
+  else{1}
+}
+MF2(3)
+MF2(-5)
+MF2(c(0:3))
+MF2(c(-3:0))
+@
+\end{example}
+
+Una función con más de un argumento
+\begin{example}
+Queremos esribir una función que calcula lo siguiente: \begin{equation*}
+f(x)=
+x^2+y^2
+\end{equation*}
+Podemos utilizar el siguiente código
+<<>>=
+MF3<-function(x,y){
+  x^2+y^2
+}
+MF3(1,2)
+MF3(1)
+@
+\end{example}
+
+Tenga en cuenta que si dentro de la función no especificas los valores que quieres que muestre, la función no muestra nada, en el siguiente código no muestra el resultado del cálculo 
+<<>>=
+MF3<-function(x,y){
+  z<-x^2+y^2
+}
+MF3(1,2)
+@
+
+Para que muestre lo calculado, tendría que usar
+<<>>=
+MF3<-function(x,y){
+  z<-x^2+y^2
+  z
+}
+MF3(1,2)
+@
+
+También una función puede arrojar resultados de varios cálculos, pero no sirve así:
+<<>>=
+MF3<-function(x,y){
+  x^2+y^2
+  x+y
+}
+MF3(1,2)
+@
+y tampoco sirve
+<<>>=
+MF3<-function(x,y){
+  z<-x^2+y^2
+  w<-x+y
+  z
+  w
+}
+MF3(1,2)
+@
+
+Para que una función arroje varios resultados, necesitamos usar \verb'list', veamos el siguiente ejemplo
+
+\begin{example}
+Queremos esribir una función que al proveer un vector de datos calcule la suma, el promedio y la desviación estándar. Podemos utilizar el siguiente código
+<<>>=
+MF4<-function(x){
+  a1<-sum(x)
+  a2<-mean(x)
+  a3<-sd(x)
+  list(suma=a1,promedio=a2,desviacion=a3)
+}
+a<-c(1,5,2,1,4,5,2)
+MF4(a)
+@
+Para extraer solo alguno de los resultados de la función \verb'MF4', por ejemplo el promedio, utilizamos
+<<>>=
+MF4(a)$promedio
+@
+
+También podemos guardar los resultados de \verb'MF4' en un objeto, y llamarlo cada vez que lo necesitemos.
+<<>>=
+bb<-MF4(a)
+bb$prom
+bb$des
+@
+\end{example}
+
+
+Función con mensaje de error
+\begin{example}
+Queremos esribir una función que calcula lo siguiente: \begin{equation*}
+f(x)=\sqrt{x}
+\end{equation*}
+que solo está definido para valores enteros. 
+Podemos utilizar el siguiente código
+<<>>=
+MF5<-function(x){
+  if(x<0){stop("No se puede calcular la raiz cuadrada de un valor negativo")}
+  else{sqrt(x)}
+}
+MF5(-1)
+MF5(5)
+@
+\end{example}
+
+Muchas funciones en \verb'R' trae valores por defecto, si queremos crear una función asì, debemos especificar los valores defecto en los argumentos de la función. Veamos el siguiente ejemplo
+\begin{example}
+<<>>=
+MF6<-function(x,order=2){
+x^{1/order}
+}
+MF6(5)
+MF6(5,2)
+MF6(5,3)
+@
+\end{example}
+
+\subsection{Ejercicios}
+\begin{enumerate}
+\item Escriba una función que al ingresar un conjunto de datos, verifica si los datos contienen datos faltantes o no. La función debe arrojar cuáles son los componentes que son datos faltantes, el conjunto de datos eliminándolos, y si los datos ingresados no contienen datos faltantes, la función debe arrojar un mensaje que indica eso. Comprueba que la función esté correcta aplicándola a datos que: 1) no contienen datos faltantes, 2) contienen 1 dato faltante, 3) contiene dos datos faltantes.
+\item Escriba una función que al ingresar un conjunto de datos, calcule los cuartiles, mínimo y máximo. Si los datos ingresados contienen datos faltantes, la función debe arrojar un mensaje de error indicando eso y calcular las anteriores medidas descriptivas eliminando los datos faltantes. 
+Comprueba que la función esté correcta aplicándola a datos que: 1) no contienen datos faltantes, 2) contienen 1 dato faltante, 3) contiene dos datos faltantes.
+\item Escriba una función que al ingresar una matriz o una base de datos (donde una fila representa un individuo y una columna representa una variable), arroje una matriz o un \verb'data.frame' que para cada variable calcule la media, desviación estándar y coeficiente de variación. Verifique que funcione bien con los datos numéricos de \verb'Lucy'.
+\item Escriba una función que calcule las funciones del primer ejecicio de la sección 6.3. 
+\item Escriba una función que al ingresar una matriz cuadrada invertible, calcule la matriz inversa y el determinante. La función debe arrojar error si el usuario ingresa una matriz rectangular o una matriz cuadrada no invertible.Verifica que funcione bien con algunas matrices.
+\end{enumerate}
+
+\section{Clase 9. Gráficas}
+
+\subsection{Graficar un conjunto de datos}
+Las gráficas estándares de \verb'R' son planas en el sentido de que los colores, estilos de líneas y puntos, títulos entre otras cosas deben ser especificados por los usuarios. 
+
+Una de las gráficas más usuales de la estadística es la gráfica de dispersión que se logra con el comando \verb'plot' cuando se aplica a datos numéricos. 
+
+<<>>=
+library(TeachingSampling)
+data(Lucy)
+plot(Lucy$Employees)
+@
+
+Para cambiar el nombre de los ejes, usamos las opciones de \verb'xlabs' y \verb'ylabs' dentro de \verb'plot', por ejemplo:
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados")
+@
+
+Si queremos un título para la gráfica, usamos \verb'main' dentro de plot, por ejemplo:
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",main="Grafica de dispersion")
+@
+
+También podemos cambiar el estilo de puntos por triángulos, cuadrados u otros. Esto se logra con la opción \verb'pch', por ejemplo:
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",main="Grafica de dispersion",pch=2)
+@
+
+Los colores se pueden cambiar con la opción \verb'col', por ejemplo:
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",main="Grafica de dispersion",pch=2,col="3")
+@
+
+En la anterior expresión, \verb'col=3' es equivalente a \verb'col="green"'. En la página http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf, se puede encontrar una gran variedad de colores. 
+
+Si queremos usar línea u ot en vez de puntos de la gráfica, podemos cambiar la opción \verb'type' por \verb'"l"'
+
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",type="l")
+@
+
+Veamos qué pasa si usamos \verb'o' 
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",type="o")
+@
+
+Veamos qué pasa si usamos \verb'h' 
+<<>>=
+plot(Lucy$Employees,xlab="",ylab="Numero de empleados",type="h")
+@
+
+Al usar \verb'plot' para un conjunto de datos categóricos, se genera una gráfica de barras, de color gris, por defecto.
+<<>>=
+plot(Lucy$Zone,main="Grafica de barras")
+@
+
+Pongamos un poco de color a la gráfica anterior. 
+<<>>=
+plot(Lucy$Zone,main="Grafica de barras con color",col=c(1,2,3,4,5))
+@
+
+\verb'R' también pone colores de forma automática.
+<<>>=
+plot(Lucy$Zone,main="Grafica de barras con color",col=rainbow(10))
+@
+
+\subsection{Graficar dos conjuntos de datos}
+Al tener dos conjunto de datos numéricos, una gráfica de dispersion puede mostrar la relación que haya entre las dos variables. Por ejemplo
+<<>>=
+attach(Lucy)
+plot(Employees, Income)
+@
+
+Si una de las dos variables es categórica, la función \verb'plot' arroja diagramas de caja para la variable numérica en las diferentes categorías.
+<<>>=
+plot(Zone, Income)
+@
+
+Lo cual es equivalente a 
+<<>>=
+boxplot(Income~Zone)
+@
+
+Cuando tenemos dos conjuntos de datos categóricos.
+<<>>=
+plot(Zone, Level)
+@
+Un poco de color, y cambiemos las leyendas de los ejes.
+<<>>=
+plot(Zone, Level,col=rainbow(15),xlab="Zona", ylab="Tamano")
+@
+
+\subsection{Graficar más de dos conjuntos de datos}
+<<>>=
+X<-cbind(Income, Employees,Taxes)
+pairs(X)
+@
+
+\subsection{Agregar puntos o líneas}
+Para agregar una línea horizontal, vertical o una ecuación de la forma $y=a+bx$, usamos la función \verb'abline'. Por ejemplo, a la siguiente gráfica
+<<>>=
+plot(Income,Taxes)
+@
+queremos agregar una línea que pasa por el origen de pendiente 0.1, 
+<<>>=
+plot(Income,Taxes)
+abline(a=0,b=0.1)
+@
+
+Podemos cambiar el estilo, grosor y el color de la línea como en el siguiente comando
+<<>>=
+plot(Income,Taxes)
+abline(a=0,b=0.1,lty=2,lwd=4, col=6)
+@
+
+Otras opciones para agregar líneas y puntos son \verb'lines' y \verb'points'.
+
+\subsection{Graficar una función}
+La forma de graficar una función es usando \verb'curve'. Por ejemplo, queremos visualizar la función de densidad de la distribución normal estándar desde -3 hasta 3. Podemos utilizar lo siguiente:
+<<>>=
+curve(dnorm(x),-3,3)
+@
+
+Podemos agregar la función de densidad de la distribución $t$ con 5 grados de libertad
+<<>>=
+curve(dnorm(x),-3,3)
+curve(dt(x,df=3),-3,3,add=T,lty=2)
+@
+
+Para mejorar la lectura de la gráfica, le podemos agregar unas leyendas
+<<>>=
+curve(dnorm(x),-3,3)
+curve(dt(x,df=3),-3,3,add=T,lty=2)
+legend(1,0.4,c("N(0,1)","t(5)"),lty=c(1,2))
+@
+
+\subsection{Varias gráficas en una sola}
+Queremos crear una matriz de gráficas, para eso, primero abrimos los espacios con la función \verb'par'. Por ejemplo
+<<>>=
+par(mfrow=c(1,2))
+hist(Employees)
+hist(Income)
+@
+
+\subsection{Ejercicios}
+\begin{enumerate}
+\item Elaboara una gráfica de diagramas de caja para ilustar el nivel de ingreso para empresas de diferentes tamaños (variable \verb'Level'). Poner diferentes colores a las cajas, el eje $y$ debe tener leyenda, y debe haber un título principal.
+\end{enumerate}
+\end{document}
