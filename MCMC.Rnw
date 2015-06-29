@@ -57,7 +57,7 @@ By: \textbf{Hanwen Zhang}
 
 \tableofcontents
 \newpage
-\section{Clase 25. Algoritmo de Metropolis Hastings}
+\section{Algoritmo de Metropolis Hastings}
 \subsection{Cadena de Markov}
 Una cadena de Markov es una secuencia de variables dependientes: $X_0$, $X_1$, $\cdots$, tales que la distribución de $X_t$ dadas las variables pasadas depende sólo en $X_{t-1}$. Esto es
 \begin{equation*}
