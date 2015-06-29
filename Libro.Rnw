@@ -55,17 +55,12 @@
 \numberwithin{Defi}{section}
 % --------------------------------------------------------------------------------
 \pagestyle{empty}
-\Sexpr{knit_child('portada.Rnw')}
+%\Sexpr{knit_child('portada.Rnw')}
 \frontmatter
 \tableofcontents
 % --------------------------------------------------------------------------------
 \mainmatter
-\Sexpr{knit_child('portada.Rnw')}
-\Sexpr{knit_child('cap1.Rnw')}
-\Sexpr{knit_child('cap2.Rnw')}
-\Sexpr{knit_child('cap3.Rnw')}
-\Sexpr{knit_child('cap4.Rnw')}
-\Sexpr{knit_child('cap5.Rnw')}
+\Sexpr{knit_child('Introduccion_R.Rnw')}
 %\Sexpr{knit_child('test.Rnw')}
 % --------------------------------------------------------------------------------
 \bibliography{LibroBib}
